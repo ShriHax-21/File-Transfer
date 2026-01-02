@@ -1539,8 +1539,4 @@ def main():
 
 
 if __name__ == "__main__":
-    # Fork process to return control to terminal (Linux/Mac only)
-    if sys.platform != "win32":
-        if os.fork() > 0:
-            sys.exit(0)  # Parent exits, child continues with GUI
-    main()
+     main()
