@@ -94,6 +94,21 @@ Android-file-transfer/
 | WiFi Port | 1234 | Port for same-network connections |
 | Max Upload Size | 500 MB | Maximum file size for uploads |
 
+### 📦 Max Upload Size Limits
+
+The max upload size can be changed in `android_transfer_gui.py` at line 317. The practical limit depends on your PC's available RAM since files are loaded into memory during upload.
+
+**Recommended limits based on RAM:**
+
+| Available RAM | Safe Max Upload |
+|---------------|-----------------|
+| 4 GB | ~1-2 GB |
+| 8 GB | ~3-4 GB |
+| 16 GB | ~8-10 GB |
+| 32 GB+ | ~15-20 GB |
+
+> ⚠️ **Note**: For very large files (2GB+), you may experience slower transfers, browser timeouts, or high memory usage.
+
 ## 🛠️ Troubleshooting
 
 ### "Address already in use" error
