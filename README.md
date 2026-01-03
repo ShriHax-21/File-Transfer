@@ -1,6 +1,6 @@
-# 📱 Android File Transfer
+# 📱 Android File Transfer - GUI Version
 
-A Python-based GUI application for wirelessly transferring files between Android devices and PC over WiFi.
+A modern, feature-rich graphical application for wireless file transfer between Android devices and PC. Built with Python and Tkinter, featuring a beautiful **Chill Dark Theme** and easy-to-use web interface.
 
 ![Python](https://img.shields.io/badge/Python-3.6+-blue.svg)
 ![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey.svg)
@@ -8,41 +8,55 @@ A Python-based GUI application for wirelessly transferring files between Android
 
 ## ✨ Features
 
-- **🖥️ Modern GUI** - Clean, user-friendly Tkinter interface
+### 🖥️ Desktop Application
+- **Modern Dark Theme** - Chill, relaxing teal/cyan color scheme that's easy on the eyes
 - **📶 Dual Transfer Modes**:
-  - **Hotspot Mode** - Android creates hotspot, PC connects (no internet needed)
-  - **WiFi Mode** - Both devices on the same network
-- **📤 Upload** - Transfer files from Android to PC
-- **📥 Download** - Transfer files from PC to Android
-- **📷 QR Code** - Scan to instantly connect from your Android device
-- **🌐 Web Interface** - Beautiful, mobile-optimized web UI
-- **📁 Drag & Drop** - Easy file selection on mobile browser
-- **🔄 Real-time Logging** - Track all transfer activity
+  - **Hotspot Mode** - Connect via WiFi Direct/Mobile Hotspot (no internet needed)
+  - **WiFi Mode** - Connect over local WiFi network
+- **📷 QR Code Generation** - Scan QR code from your phone for instant connection
+- **📊 Real-time Logging** - Color-coded logs (success, error, info, warnings)
+- **🔢 Connection Counter** - Track the number of active connections
+- **📋 One-Click URL Copy** - Copy server URL to clipboard instantly
+- **🌐 Open in Browser** - Launch web interface directly from the app
+
+### 🌐 Web Interface
+- **📱 Responsive Design** - Works beautifully on mobile, tablet, and desktop
+- **📁 Drag & Drop Upload** - Simply drag files to upload
+- **☑️ Multi-file Selection** - Select multiple files for batch operations
+- **📂 Folder Navigation** - Browse through folder structures with breadcrumb navigation
+- **📦 ZIP Download** - Download multiple files/folders as a single ZIP archive
+- **📊 Progress Indicators** - Visual feedback for upload progress
+- **🔄 Auto-refresh** - Real-time file list updates
 
 ## 📋 Requirements
 
-- Python 3.6+
+- Python 3.6 or higher
+- **Required packages:**
+  ```
+  qrcode[pil]
+  Pillow
+  ```
 - tkinter (usually included with Python)
-- qrcode (optional, for QR code generation)
-- Pillow (optional, for QR code display)
 
 ## 🚀 Installation
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/yourusername/Android-file-transfer.git
-   cd Android-file-transfer
+   git clone https://github.com/yourusername/File-Transfer.git
+   cd File-Transfer
    ```
 
-2. **Install dependencies** (optional, for QR code support):
+2. **Install dependencies**:
    ```bash
-   pip install qrcode[pil]
+   pip install qrcode[pil] Pillow
    ```
 
 3. **Run the application**:
    ```bash
    python android_transfer_gui.py
    ```
+
+> **Note:** The application will automatically attempt to install the QR code library if it's missing on first run.
 
 ## 📖 Usage
 
@@ -67,22 +81,26 @@ A Python-based GUI application for wirelessly transferring files between Android
 ### Transferring Files
 
 **Upload (Android → PC)**:
-- Tap the upload area in the web interface
-- Select files from your Android device
-- Files are saved to the `uploads/` folder
+1. Open the web interface on your phone
+2. Tap the upload area or drag & drop files
+3. Select files from your Android device
+4. Files are saved to the `uploads/` folder on PC
 
 **Download (PC → Android)**:
-- Place files in the `downloads/` folder on your PC
-- Files will appear in the web interface
-- Tap "Download" to save to your Android device
+1. Place files in the `downloads/` folder on your PC
+2. Files will appear in the web interface
+3. **Single file**: Tap file name or download button
+4. **Multiple files**: Use checkboxes to select, then click "Download" for ZIP
+5. **Folders**: Click folder to browse, or download entire folder as ZIP
 
 ## 📁 Folder Structure
 
 ```
-Android-file-transfer/
+File-Transfer/
 ├── android_transfer_gui.py   # Main application
-├── uploads/                  # Files uploaded from Android
-├── downloads/                # Files available for Android to download
+├── uploads/                  # Files uploaded from Android (auto-created)
+├── downloads/                # Files available for download (auto-created)
+├── connection_qr.png         # Generated QR code image
 └── README.md
 ```
 
@@ -92,7 +110,34 @@ Android-file-transfer/
 |---------|---------|-------------|
 | Hotspot Port | 1234 | Port for hotspot mode connections |
 | WiFi Port | 1234 | Port for same-network connections |
-| Max Upload Size | 500 MB | Maximum file size for uploads |
+| Upload Directory | `uploads/` | Where uploaded files are stored |
+| Download Directory | `downloads/` | Where downloadable files are placed |
+
+## 🎨 Theme Colors
+
+The application uses a **Chill Dark Theme** with a relaxing color palette:
+
+| Element | Color | Hex |
+|---------|-------|-----|
+| Background | Deep Ocean | `#0f1419` |
+| Card Background | Dark Slate | `#1c2630` |
+| Accent Primary | Calm Teal | `#4fd1c5` |
+| Success | Soft Green | `#68d391` |
+| Error | Soft Coral | `#fc8181` |
+| Warning | Soft Orange | `#f6ad55` |
+| Info | Soft Blue | `#63b3ed` |
+| Text Primary | Soft White | `#e2e8f0` |
+
+## 📦 Web API Endpoints
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/` | GET | Main web interface |
+| `/upload` | GET/POST | Upload form and file upload handler |
+| `/api/files` | GET | JSON list of files/folders |
+| `/download/<path>` | GET | Download single file |
+| `/download-folder/<path>` | GET | Download folder as ZIP |
+| `/download-selected` | GET | Download selected items as ZIP |
 
 ### 📦 Max Upload Size Limits
 
@@ -113,26 +158,51 @@ The max upload size can be changed in `android_transfer_gui.py` at line 317. The
 
 ### "Address already in use" error
 - Change the port number to an unused port (try 8080, 8000, etc.)
+- Wait a few seconds and try again
+- Check if another application is using the port
 
 ### Can't connect from Android
 - Ensure both devices are on the same network (WiFi mode)
 - Check if firewall is blocking the connection
 - Verify the IP address is correct
+- Try disabling VPN on either device
 
 ### QR Code not displaying
-- Install the qrcode library: `pip install qrcode[pil]`
+- Install the qrcode library: `pip install qrcode[pil] Pillow`
 - Restart the application
 
 ### Files not appearing
 - Refresh the file list using the "🔄 Refresh" button
-- Ensure files are placed in the correct folder
+- Ensure files are placed in the `downloads/` folder
+- Check file permissions
+
+## 🖼️ Screenshots
+
+### Desktop Application
+```
+┌──────────────────────────────────────────────┐
+│  📱 Android File Transfer                    │
+│  Transfer files between Android and PC       │
+├──────────────────────────────────────────────┤
+│  Server Settings          │    QR Code       │
+│  ○ 📶 Hotspot Mode       │   ┌─────────┐   │
+│  ● 🌐 WiFi Mode          │   │ ▓▓▓▓▓▓▓ │   │
+│  Port: [1234]            │   │ ▓▓▓▓▓▓▓ │   │
+│                          │   │ ▓▓▓▓▓▓▓ │   │
+│  [▶ Start Server]        │   └─────────┘   │
+├──────────────────────────────────────────────┤
+│  📋 Activity Log                             │
+│  [INFO] Server started on http://192.168... │
+│  [SUCCESS] File uploaded: document.pdf      │
+└──────────────────────────────────────────────┘
+```
 
 ## 🤝 Contributing
 
 Contributions are welcome! Feel free to:
-- Report bugs
-- Suggest features
-- Submit pull requests
+- 🐛 Report bugs
+- 💡 Suggest new features
+- 🔧 Submit pull requests
 
 ## 📄 License
 
@@ -140,9 +210,12 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ## 🙏 Acknowledgments
 
-- Built with Python and Tkinter
+- Built with [Python](https://python.org) and [Tkinter](https://docs.python.org/3/library/tkinter.html)
 - QR code generation powered by [python-qrcode](https://github.com/lincolnloop/python-qrcode)
+- Image processing by [Pillow](https://pillow.readthedocs.io/)
 
 ---
 
+<p align="center">
 Made with ❤️ for easy Android-PC file transfers
+</p>
