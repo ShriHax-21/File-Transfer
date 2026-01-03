@@ -1538,8 +1538,7 @@ class AndroidTransferGUI:
         top_row.columnconfigure(1, weight=0)
         
         # Left side - Mode Selection Frame
-        mode_frame = ttk.L
-        abelFrame(top_row, text="  ⚙️ Transfer Mode  ", padding="15")
+        mode_frame = ttk.LlsabelFrame(top_row, text="  ⚙️ Transfer Mode  ", padding="15")
         mode_frame.grid(row=0, column=0, sticky="nsew", padx=(0, 15))
         
         # Hotspot mode
