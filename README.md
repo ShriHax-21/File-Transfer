@@ -42,8 +42,8 @@ A modern, feature-rich graphical application for wireless file transfer between 
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/yourusername/File-Transfer.git
-   cd File-Transfer
+   git clone https://github.com/ShriHax-21/NetToss-Wireless_File_Transfer.git
+   cd NetToss-Wireless_File_Transfer
    ```
 
 2. **Install dependencies**:
