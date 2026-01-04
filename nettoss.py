@@ -132,8 +132,8 @@ class ThemeColors:
     BG_HOVER = "#283340"          # Hover state
     
     # Accent colors - Calm teal/cyan
-    ACCENT_PRIMARY = "#4fd1c5"    # Primary teal
-    ACCENT_SECONDARY = "#81e6d9"  # Light teal
+    ACCENT_PRIMARY = "#c04fd1"    # Primary teal
+    ACCENT_SECONDARY = "#c04fd1"  # Light teal
     ACCENT_GRADIENT_START = "#38b2ac"
     ACCENT_GRADIENT_END = "#667eea"
     
@@ -1716,67 +1716,80 @@ class NetTossGUI:
         control_frame = ttk.Frame(main_frame)
         control_frame.pack(fill=tk.X, pady=(5, 15))
         
-        # Button container for centering
+        # Button container - align to left
         btn_container = ttk.Frame(control_frame)
-        btn_container.pack(expand=True)
+        btn_container.pack(anchor="w", padx=(10, 0))
+        
+        # Uniform box dimensions
+        BOX_WIDTH = 130
+        BOX_HEIGHT = 60
         
         # Storage info box - shows max upload size
         storage_box = tk.Frame(btn_container, bg=ThemeColors.BG_CARD, 
-                               highlightbackground=ThemeColors.BORDER, highlightthickness=2,
-                               padx=12, pady=8)
-        storage_box.pack(side=tk.LEFT, padx=(0, 10))
+                               highlightbackground=ThemeColors.BORDER, highlightthickness=1,
+                               width=BOX_WIDTH, height=BOX_HEIGHT)
+        storage_box.pack(side=tk.LEFT, padx=(0, 8))
+        storage_box.pack_propagate(False)  # Maintain fixed size
         
-        storage_title = tk.Label(storage_box, text="💾 Max Upload", 
-                                  font=("Helvetica", 10, "bold"),
-                                  bg=ThemeColors.BG_CARD, fg=ThemeColors.TEXT_PRIMARY)
+        storage_inner = tk.Frame(storage_box, bg=ThemeColors.BG_CARD)
+        storage_inner.place(relx=0.5, rely=0.5, anchor="center")
+        
+        storage_title = tk.Label(storage_inner, text="💾 Max Upload", 
+                                  font=("Segoe UI", 9),
+                                  bg=ThemeColors.BG_CARD, fg=ThemeColors.TEXT_SECONDARY)
         storage_title.pack()
         
-        self.max_size_value = tk.Label(storage_box, text="Calculating...", 
-                                        font=("Helvetica", 11, "bold"),
+        self.max_size_value = tk.Label(storage_inner, text="--", 
+                                        font=("Segoe UI", 12, "bold"),
                                         bg=ThemeColors.BG_CARD, fg=ThemeColors.ACCENT_PRIMARY)
         self.max_size_value.pack()
         
         # RAM input box - separate box for RAM configuration
         ram_box = tk.Frame(btn_container, bg=ThemeColors.BG_CARD, 
-                           highlightbackground=ThemeColors.BORDER, highlightthickness=2,
-                           padx=12, pady=8)
-        ram_box.pack(side=tk.LEFT, padx=(0, 15))
+                           highlightbackground=ThemeColors.BORDER, highlightthickness=1,
+                           width=BOX_WIDTH, height=BOX_HEIGHT)
+        ram_box.pack(side=tk.LEFT, padx=(0, 12))
+        ram_box.pack_propagate(False)  # Maintain fixed size
         
-        ram_title = tk.Label(ram_box, text="🧠 RAM", 
-                              font=("Helvetica", 10, "bold"),
-                              bg=ThemeColors.BG_CARD, fg=ThemeColors.TEXT_PRIMARY)
+        ram_inner = tk.Frame(ram_box, bg=ThemeColors.BG_CARD)
+        ram_inner.place(relx=0.5, rely=0.5, anchor="center")
+        
+        ram_title = tk.Label(ram_inner, text="🧠 RAM", 
+                              font=("Segoe UI", 9),
+                              bg=ThemeColors.BG_CARD, fg=ThemeColors.TEXT_SECONDARY)
         ram_title.pack()
         
         # RAM input row
-        ram_row = tk.Frame(ram_box, bg=ThemeColors.BG_CARD)
-        ram_row.pack(pady=(5, 0))
+        ram_row = tk.Frame(ram_inner, bg=ThemeColors.BG_CARD)
+        ram_row.pack(pady=(2, 0))
         
         self.ram_var = tk.StringVar(value="8")
-        self.ram_entry = tk.Entry(ram_row, width=4,
+        self.ram_entry = tk.Entry(ram_row, width=3,
                                    textvariable=self.ram_var,
-                                   font=("Helvetica", 10),
+                                   font=("Segoe UI", 10),
                                    bg=ThemeColors.BG_SECONDARY,
                                    fg=ThemeColors.TEXT_PRIMARY,
                                    insertbackground=ThemeColors.TEXT_PRIMARY,
                                    highlightbackground=ThemeColors.BORDER,
                                    highlightthickness=1,
+                                   justify="center",
                                    relief="flat")
-        self.ram_entry.pack(side=tk.LEFT)
+        self.ram_entry.pack(side=tk.LEFT, padx=(0, 2))
         
         ram_unit = tk.Label(ram_row, text="GB", 
-                             font=("Helvetica", 9),
+                             font=("Segoe UI", 9),
                              bg=ThemeColors.BG_CARD, fg=ThemeColors.TEXT_SECONDARY)
-        ram_unit.pack(side=tk.LEFT, padx=(3, 5))
+        ram_unit.pack(side=tk.LEFT, padx=(0, 4))
         
-        # OK button
+        # OK button - compact and styled
         self.ram_ok_btn = tk.Button(ram_row, text="OK",
-                                     font=("Helvetica", 9, "bold"),
+                                     font=("Segoe UI", 8, "bold"),
                                      bg=ThemeColors.ACCENT_PRIMARY,
                                      fg=ThemeColors.BG_DARK,
                                      activebackground=ThemeColors.ACCENT_SECONDARY,
                                      activeforeground=ThemeColors.BG_DARK,
                                      relief="flat",
-                                     padx=8, pady=2,
+                                     padx=6, pady=1,
                                      cursor="hand2",
                                      command=self.on_ram_change)
         self.ram_ok_btn.pack(side=tk.LEFT)
